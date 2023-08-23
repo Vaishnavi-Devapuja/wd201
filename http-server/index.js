@@ -3,7 +3,7 @@ const fs = require("fs");
 const minimist = require("minimist");
 
 const args = minimist(process.argv.slice(2));
-const port = args.port; // Use provided port or default to 5012
+const port = args.port; 
 
 let homeContent = "";
 let projectContent = "";
