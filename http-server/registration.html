@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>To Do</title>
+  </head>
+  <body>
+    <header style="text-align: left">Hello!</header>
+    <h1>Register now</h1>
+    <div class="main">
+      <div class="form">
+        <h4 style="text-align: left">Register Form</h4>
+        <form id="user-form">
+          <label for="name">Name : </label>
+          <br><input required type="text" name="name" id="name" />
+          <br />
+          <label for="email">Email : </label>
+          <br><input required type="email" name="email" id="email" />
+          <br />
+          <label for="password">Password : </label>
+          <br><input required type="password" name="password" id="password" /><br />
+          <label for="dob">DOB : </label>
+          <br><input type="date" name="dob" id="dob" required />
+          <br />
+          <input
+            style="width: 50px"
+            type="checkbox"
+            name="acceptTerms"
+            id="acceptTerms"
+          />
+          <label for="acceptTerms">Accept terms & Conditions</label>
+          <br /><br />
+          <input
+            style="background-color: rgb(19, 116, 151); color: rgba(255, 255, 255, 0.64)"
+            type="submit"
+            value="Submit"
+          />
+        </form>
+      </div>
+    </div>
+    <div id="entrytble"></div>
+    <script src="reg.js"></script>
+  </body>
+</html>
