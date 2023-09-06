@@ -19,11 +19,6 @@ describe("Todolist Test Suite", () => {
     });
   });
 
-  beforeEach(() => {
-    // Add a clean slate for each test
-    all.length = 0;
-  });
-
   test("should initially have an empty todo list", () => {
     expect(all.length).toBe(1);
 
