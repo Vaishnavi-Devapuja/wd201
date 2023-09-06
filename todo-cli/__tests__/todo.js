@@ -1,6 +1,13 @@
 const { default: expect } = require("expect")
 const todoList = require ("../todo")
-const { all , markAsComplete, add, overdue, dueToday, dueLater} = todoList()
+const { 
+    all, 
+    markAsComplete, 
+    add, 
+    overdue, 
+    dueToday, 
+    dueLater
+} = todoList()
 describe("todolist test suite", () => {
     beforeAll(() => {
         const today = new Date()
@@ -19,24 +26,24 @@ describe("todolist test suite", () => {
         markAsComplete(0)
         expect(all[0].completed).toBe(true)
     })
-    test("should obtain overdue tasks", () => {
+    test("should retrieve overdue items", () => {
         const today = new Date()
         const yesterday = new Date(new Date().setDate(today.getDate() - 1))
         const overdueCount = overdue().length
         add({ title: 'Submit assignment', dueDate: yesterday.toISOString().slice(0, 10), completed: false })
         expect(overdue().length).toBe(overdueCount + 1)
     })
-    test("should get due today tasks", () => {
+    test("should retrieve due today items", () => {
         const today = new Date()
         const dueTodayCount = dueToday().length
         add({ title: 'Pay rent', dueDate: today.toISOString().slice(0, 10), completed: true })
         expect(dueToday().length).toBe(dueTodayCount + 1)
     })
-    test("should get due later tasks", () => {
+    test("should retrieve due later items", () => {
         const today = new Date()
-        const tomorrow = new Date(new Date().setDate(today.getDate() + 1))
+        const tom = new Date(new Date().setDate(today.getDate() + 1))
         const duelaterCount = dueLater().length
-        add({ title: 'Pay electric bill', dueDate: tomorrow.toISOString().slice(0, 10), completed: false })
+        add({ title: 'Pay electric bill', dueDate: tom.toISOString().slice(0, 10), completed: false })
         expect(dueLater().length).toBe(duelaterCount + 1)
     })
 })
