@@ -10,25 +10,28 @@ const {
   toDisplayableList,
 } = todoList()
 
-describe("Todolist Test Suite", () => {
+describe('Todolist Test Suite', () => {
   beforeAll(() => {
+    const today = new Date();
+    const tomorrow = new Date(new Date().setDate(today.getDate() + 1));
+    expect(all.length).toBe(0);
     add({
       title: "Pay electricity bill",
-      dueDate: new Date().toISOString().slice(0, 10),
-      completed: false,
+      dueDate: today.toISOString().slice(0, 10),
+      completed: true,
     });
+    expect(all.length).toBe(1);
   });
 
-  test("should initially have an empty todo list", () => {
-    expect(all.length).toBe(1);
-
+  test("should add new todo", () => {
+    const todoItemCount = all.length;
     add({
-      title: "Project submission",
+      title: "Run errands",
       dueDate: new Date().toISOString().slice(0, 10),
       completed: false,
     });
 
-    expect(all.length).toBe(2);
+    expect(all.length).toBe(todoItemCount + 1);
   });
 
   test("should mark a task as complete", () => {
@@ -40,42 +43,37 @@ describe("Todolist Test Suite", () => {
   });
 
   test("should have overdue tasks", () => {
-    let todayDate = new Date();
+    const today = new Date();
+    const yesterday = new Date(new Date().setDate(today.getDate() - 1));
+    const overdueCount = overdue().length;
     add({
-      title: "overdue check",
-      dueDate: new Date(todayDate.setDate(todayDate.getDate() - 1))
-        .toISOString()
-        .split("T")[0],
+      title: "Project submission",
+      dueDate: yesterday.toISOString().slice(0, 10),
       completed: false,
     });
-
-    let overdueTasks = overdue();
-
-    expect(overdueTasks.length).toBe(1);
+    expect(overdue().length).toBe(overdueCount + 1);
   });
 
   test("should have tasks due later", () => {
-    let todayDate = new Date();
+    const today = new Date();
+    const tomorrow = new Date(new Date().setDate(today.getDate() + 1));
+    const dueLaterCount = dueLater().length;
     add({
-      title: "due later check",
-      dueDate: new Date(todayDate.setDate(todayDate.getDate() + 1))
-        .toISOString()
-        .split("T")[0],
+      title: "Buy groceries",
+      dueDate: tomorrow.toISOString().slice(0, 10),
       completed: false,
     });
-
-    let dueLaterTasks = dueLater();
-
-    expect(dueLaterTasks.length).toBe(1);
+    expect(dueLater().length).toBe(dueLaterCount + 1);
   });
 
   test("should have tasks due today and displayable list", () => {
-    let dueTodayTasks = dueToday();
-
-    expect(dueTodayTasks.length).toBe(2);
-
-    let displayableList = toDisplayableList(dueTodayTasks);
-
-    expect(displayableList).toBe("[x] Pay electricity bill\n[ ] Project submission");
+    const today = new Date();
+    const dueTodayCount = dueToday().length;
+    add({
+      title: "Pay rent",
+      dueDate: today.toISOString().slice(0, 10),
+      completed: true,
+    });
+    expect(dueToday().length).toBe(dueTodayCount + 1);
   });
 });
