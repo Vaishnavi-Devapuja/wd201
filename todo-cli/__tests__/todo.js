@@ -1,4 +1,3 @@
-/* eslint-disable no-undef */
 const todoList = require("../todo")
 const {
   all,
@@ -17,8 +16,8 @@ describe('Todolist Test Suite', () => {
     expect(all.length).toBe(0);
     add({
       title: "Pay electricity bill",
-      dueDate: today.toISOString().slice(0, 10),
-      completed: true,
+      dueDate: tomorrow.toISOString().slice(0, 10),
+      completed: false,
     });
     expect(all.length).toBe(1);
   });
