@@ -52,7 +52,7 @@ module.exports = (sequelize, DataTypes) => {
       // FILL IN HERE TO RETURN OVERDUE ITEMS
       return await Todo.findAll({
         where: {
-          dueDate: { [Op.lt]: new Date().toLocaleDateString('en-CA') },
+          dueDate: { [Op.lt]: new Date().toISOString().split('T')[0] },
         },
       });
     }
@@ -61,7 +61,7 @@ module.exports = (sequelize, DataTypes) => {
       // FILL IN HERE TO RETURN ITEMS DUE tODAY
       return await Todo.findAll({
         where: {
-          dueDate: { [Op.eq]: new Date().toLocaleDateString('en-CA') },
+          dueDate: { [Op.eq]: new Date().toISOString().split('T')[0] },
         },
       });
     }
@@ -70,7 +70,7 @@ module.exports = (sequelize, DataTypes) => {
       // FILL IN HERE TO RETURN ITEMS DUE LATER
       return await Todo.findAll({
         where: {
-          dueDate: { [Op.gt]: new Date().toLocaleDateString('en-CA') },
+          dueDate: { [Op.gt]: new Date().toISOString().split('T')[0] },
         },
       });
     }
