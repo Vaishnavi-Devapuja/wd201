@@ -49,7 +49,7 @@ app.get("/todos/:id", async (req, res) => {
 app.post("/todos", async (req, res) => {
   try {
     const todo = await Todo.create(req.body);
-    return res.status(201).json(todo);
+    return res.json(todo);
   } catch (error) {
     console.error(error);
     return res.status(422).json({ error: "Invalid data" });
