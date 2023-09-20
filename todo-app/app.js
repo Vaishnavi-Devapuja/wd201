@@ -9,11 +9,6 @@ app.use(bodyParser.json());
 app.use(express.static(path.join(__dirname, "/public")));
 app.set("view engine", "ejs");
 
-app.use((err, req, res, next) => {
-  console.error(err.stack);
-  res.status(500).send("Something broke!");
-});
-
 app.get("/", async (req, res)=> {
   const allTodos= await Todo.getTodos();
   if(req.accepts("html")){
@@ -31,10 +26,10 @@ app.get("/todos", async (req, res) => {
   console.log("We have the list of all todos ...");
   try {
     const todosList = await Todo.findAll();
-    res.json(todosList);
+    return res.json(todosList);
   } catch (error) {
     console.error(error);
-    res.status(422).json({ error: "Server error" });
+    return res.status(422).json({ error: "Server error" });
   }
 });
 
@@ -44,20 +39,20 @@ app.get("/todos/:id", async (req, res) => {
     if (!todo) {
       return res.status(404).json({ error: "Todo not found" });
     }
-    res.json(todo);
+    return res.json(todo);
   } catch (error) {
     console.error(error);
-    res.status(422).json({ error: "Server error" });
+    return res.status(422).json({ error: "Server error" });
   }
 });
 
 app.post("/todos", async (req, res) => {
   try {
     const todo = await Todo.create(req.body);
-    res.status(201).json(todo);
+    return res.status(201).json(todo);
   } catch (error) {
     console.error(error);
-    res.status(422).json({ error: "Invalid data" });
+    return res.status(422).json({ error: "Invalid data" });
   }
 });
 
@@ -68,10 +63,10 @@ app.put("/todos/:id/markAsCompleted", async (req, res) => {
       return res.status(422).json({ error: "Todo not found" });
     }
     const updatedTodo = await todo.update({ completed: true });
-    res.json(updatedTodo);
+    return res.json(updatedTodo);
   } catch (error) {
-    console.error(error);
-    res.status(422).json({ error: "Server error" });
+    console.log(error);
+    return res.status(422).json({ error: "Server error" });
   }
 });
 
