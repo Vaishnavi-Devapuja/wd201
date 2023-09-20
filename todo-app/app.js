@@ -71,7 +71,7 @@ app.put("/todos/:id/markAsCompleted", async (req, res) => {
 });
 
 app.delete("/todos/:id", async (req, res) => {
-  console.log("To delete a to-do with ID: ", req.params.id);
+  console.log("We have to delete a todo with ID: ", req.params.id);
   const todo = await Todo.findByPk(req.params.id);
   if (!todo) {
     return res.status(404).json({ error: 'Todo not found' });
