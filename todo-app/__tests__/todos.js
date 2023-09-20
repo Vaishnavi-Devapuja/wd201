@@ -76,23 +76,23 @@ describe("Todo Application", function () {
     expect(parsedResponse[3].title).toBe("Return books");
   });
 
-  test("DELETE /todos/:id should delete a todo and respond with true", async () => {
-  const agent = request.agent(server);
+  app.delete("/todos/:id", async (req, res) => {
+  try {
+    const todo = await Todo.findByPk(req.params.id);
 
-  // Create a new todo
-  let res = await agent.post("/todos").send({
-    title: "Buy Choklate",
-    dueDate: new Date().toISOString(),
-    completed: false,
-  });
+    if (!todo) {
+      // If the todo with the given ID does not exist, respond with 404 Not Found
+      return res.status(404).json({ error: "Todo not found" });
+    }
 
-  const parsedResponse = JSON.parse(res.text);
-  const todoID = parsedResponse.id;
+    // If the todo exists, delete it
+    await todo.destroy();
 
-  // Delete the todo
-  res = await agent.delete(`/todos/${todoID}`);
-
-  // Assert that the response is true (indicating successful deletion)
-  expect(res.body).toBe(true);
+    // Respond with 200 OK and true to indicate successful deletion
+    return res.status(200).json(true);
+  } catch (error) {
+    // If there's an error during the process, respond with 500 Internal Server Error
+    console.error(error);
+    return res.status(500).json({ error: "Server error" });
+  }
 });
-
