@@ -5,22 +5,22 @@ const app = require("../app");
 
 let server, agent;
 
-beforeAll(async () => {
-  await db.sequelize.sync({ force: true });
-  server = app.listen(3000, () => {});
-  agent = request.agent(server);
-});
+describe("Todo Application", function () {
+  beforeAll(async () => {
+    await db.sequelize.sync({ force: true });
+    server = app.listen(3000, () => {});
+    agent = request.agent(server);
+  });
 
-afterAll(async () => {
-  try {
-    await db.sequelize.close();
-    await server.close();
-  } catch (error) {
-    console.error(error);
-  }
-});
+  afterAll(async () => {
+    try {
+      await db.sequelize.close();
+      await server.close();
+    } catch (error) {
+      console.log(error);
+    }
+  });
 
-describe("Todo Application", () => {
   test("POST /todos should create a todo and respond with JSON", async () => {
     const response = await agent.post("/todos").send({
       title: "Buy groceries",
