@@ -70,9 +70,9 @@ app.put("/todos/:id/markAsCompleted", async (req, res) => {
   }
 });
 
-app.delete("/todos/:id", async (req, res) => {
-   console.log("To delete a to-do with ID: ", request.params.id);
- const deletTodo = await Todo.destroy({ where: { id: request.params.id } });
+app.delete("/todos/:id", async function (req, res) {
+  console.log("To delete a to-do with ID: ", request.params.id);
+  const deletTodo = await Todo.destroy({ where: { id: request.params.id } });
   response.send(deletTodo ? true : false);
 });
 
