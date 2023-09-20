@@ -8,16 +8,16 @@
   },
   "test": {
     "username": "postgres",
-    "password": "Jift*64m",
-    "database": "database_test",
+    "password": "postgres",
+    "database": "wd-todo-test",
     "host": "127.0.0.1",
-    "dialect": "mysql"
+    "dialect": "postgres"
   },
   "production": {
     "username": "postgres",
-    "password": "Jift*64m",
+    "password": "postgres",
     "database": "database_production",
     "host": "127.0.0.1",
-    "dialect": "mysql"
+    "dialect": "postgres"
   }
 }
