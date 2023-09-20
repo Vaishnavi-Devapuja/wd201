@@ -77,20 +77,16 @@ describe("Todo Application", function () {
   });
 
   test("DELETE /todos/:id should delete a todo and respond with true", async () => {
-    const createResponse = await agent.post("/todos").send({
+    const create_response = await agent.post("/todos").send({
       title: "Done all works",
       dueDate: new Date().toISOString(),
       completed: false,
     });
+    const Parsedresponse = JSON.parse(create_response.text);
+    const todoID = Parsedresponse.id;
 
-    const parsedCreateResponse = JSON.parse(createResponse.text);
-    const todoID = parsedCreateResponse.id;
-
-    const delete_response = await agent.delete(`/todos/${todoID}`).send();
-
-    //expect(delete_response.statusCode).toBe(200);
-
-    const parsedDeleteResponse = JSON.parse(delete_response.text);
+    const deleteResponse = await agent.delete(`/todos/${todoID}`).send();
+    const parsedDeleteResponse = JSON.parse(deleteResponse.text);
     expect(parsedDeleteResponse).toBe(true);
   });
 });
