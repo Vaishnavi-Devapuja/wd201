@@ -70,14 +70,20 @@ app.put("/todos/:id/markAsCompleted", async (req, res) => {
   }
 });
 
-app.delete("/todos/:id", async (req, res) => {
-  console.log("We have to delete a todo with ID: ", req.params.id);
-  const todo = await Todo.findByPk(req.params.id);
-  if (!todo) {
-    return res.status(404).json({ error: 'Todo not found' });
+app.delete("/todos/:id", async function (request, response) {
+  console.log("We have to delete a Todo with ID: ", request.params.id);
+  try {
+    const todo = await Todo.findByPk(request.params.id);
+    if (!todo) {
+      return response.status(404).json({ error: 'Todo not found' });
+    }
+
+    const delete_todo = await Todo.destroy({ where: { id: request.params.id } });
+    response.send(delete_todo ? true : false);
+  } catch (error) {
+    console.error(error);
+    response.status(500).json({ error: 'Server error' });
   }
-  const deletTodo = await Todo.destroy({ where: { id: req.params.id } });
-  return res.send(deletTodo ? true : false);
 });
 
 module.exports = app;
